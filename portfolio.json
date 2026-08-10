@@ -3,7 +3,7 @@
     {
       "label": "TRUSTWORTHY AI",
       "caption": "privacy · routing · evaluation",
-      "signal": "public proof + private depth",
+      "signal": "three public systems + safety",
       "color": "#68E8FF"
     },
     {
@@ -21,9 +21,9 @@
     {
       "label": "CREATIVE SYSTEMS",
       "caption": "products · media · interfaces",
-      "signal": "private product experiments",
+      "signal": "three public tools + private core",
       "color": "#FFB36A"
     }
   ],
-  "footer": "2 public projects · private labs · research in motion"
+  "footer": "8 public projects · 3 private labs · research in motion"
 }
