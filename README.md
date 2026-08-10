@@ -6,7 +6,7 @@
 
 <h1>Manu Faujdar</h1>
 
-<p><strong>Healthtech builder · Translational AI researcher · Creative systems designer</strong></p>
+<p><strong>Healthtech builder · Trustworthy AI researcher · Clinical workflow designer</strong></p>
 
 <p>
   <a href="https://masterllm.ai">Master LLM</a> ·
@@ -96,6 +96,63 @@ FastAPI service for improving text prompts.
 </tr>
 </table>
 
+## Engineering focus
+
+<div align="center">
+
+`clinical workflow` · `intended use` · `privacy controls` · `explainable routing` · `failure modes` · `validation planning` · `synthetic testing`
+
+</div>
+
+I turn ambiguous health-technology problems into bounded systems: define the user and non-use case, map risks, make decisions observable, test failure paths, and document what the evidence does—and does not—support.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**◈ Trustworthy AI**
+
+- allow / redact / block controls
+- metadata-only audit events
+- explainable model and tool routing
+- explicit human authorization gates
+
+</td>
+<td width="50%" valign="top">
+
+**⌁ Clinical prototypes**
+
+- vendor-neutral capability contracts
+- disconnect and safe-stop behavior
+- privacy boundaries
+- synthetic, offline-testable workflows
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+**◌ Validation**
+
+- evidence mapping
+- intended-use definition
+- confounder and provenance planning
+- repeat-trial evaluation
+
+</td>
+<td width="50%" valign="top">
+
+**✦ Delivery**
+
+- needs framing
+- prototype requirements
+- implementation-risk mapping
+- clinical / product / data / engineering coordination
+
+</td>
+</tr>
+</table>
+
 ## The wider portfolio
 
 <div align="center">
@@ -106,6 +163,8 @@ FastAPI service for improving text prompts.
 
 The public repositories are the visible edge of a larger portfolio of private product labs and research systems. Private work is intentionally represented as a visual category rather than linked before it has a safe public release, complete documentation, and a reproducible demo.
 
+<sub>Evidence boundary: clinical projects shown here are research-stage or synthetic/non-clinical unless explicitly stated in the repository.</sub>
+
 ## Working principles
 
 | ◈ Observable | ⌁ Bounded | ◌ Resilient | ✦ Memorable |
@@ -114,7 +173,7 @@ The public repositories are the visible edge of a larger portfolio of private pr
 
 ## Now
 
-Turning separate experiments into a small set of coherent, testable health-AI and creative-system flagships.
+Turning separate experiments into coherent public flagships with reproducible demos, explicit safety boundaries, and evidence-aware engineering.
 
 <div align="center">
 
