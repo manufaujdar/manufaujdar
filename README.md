@@ -73,7 +73,7 @@ Turning separate experiments into a small set of coherent, testable health-AI an
 
 <div align="center">
 
-<a href="https://masterllm.ai"><strong>Build with me →</strong></a>
+<a href="https://manufaujdar.com"><strong>Build with me →</strong></a>
 
 </div>
 
