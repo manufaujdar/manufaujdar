@@ -2,6 +2,8 @@
 
 <img src="./assets/portfolio-constellation.svg" alt="A constellation connecting healthcare, trustworthy AI, research, and creative systems" width="100%">
 
+<img src="./assets/portfolio-status.svg" alt="Portfolio status across trustworthy AI, clinical interfaces, translational research, and creative systems" width="100%">
+
 <h1>Manu Faujdar</h1>
 
 <p><strong>Healthtech builder · Translational AI researcher · Creative systems designer</strong></p>

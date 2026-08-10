@@ -1,0 +1,29 @@
+name: Refresh portfolio visual
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - portfolio.json
+      - scripts/render_portfolio.py
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render portfolio status SVG
+        run: python3 scripts/render_portfolio.py
+      - name: Commit generated visual when changed
+        run: |
+          if git diff --quiet -- assets/portfolio-status.svg; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/portfolio-status.svg
+          git commit -m "Refresh portfolio visual"
+          git push
