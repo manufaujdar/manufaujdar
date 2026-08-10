@@ -51,6 +51,51 @@ Vendor-neutral healthcare smart-glasses research with capability contracts, simu
 </tr>
 </table>
 
+## More public projects
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+**◈ [AI Firewall](https://github.com/manufaujdar/ai-firewall)**<br>
+Fail-closed sensitive-data inspection for outbound AI calls.
+
+</td>
+<td width="33%" valign="top">
+
+**◌ [SystemBench](https://github.com/manufaujdar/systembench)**<br>
+Reproducible evaluation for complete AI systems.
+
+</td>
+<td width="33%" valign="top">
+
+**⌁ [Reflection AI](https://github.com/manufaujdar/reflection-ai)**<br>
+Consent-aware personalization and memory framework.
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+**✦ [SignalForge](https://github.com/manufaujdar/signalforge)**<br>
+Content intelligence and evaluation dashboard prototype.
+
+</td>
+<td width="33%" valign="top">
+
+**✦ [VideoViber](https://github.com/manufaujdar/VideoViber)**<br>
+Agentic, spec-driven video creation workspace.
+
+</td>
+<td width="33%" valign="top">
+
+**◇ [Prompt Enhancer](https://github.com/manufaujdar/Prompt-Enhancer)**<br>
+FastAPI service for improving text prompts.
+
+</td>
+</tr>
+</table>
+
 ## The wider portfolio
 
 <div align="center">
