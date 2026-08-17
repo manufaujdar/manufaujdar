@@ -17,6 +17,11 @@
 
 </div>
 
+> Licensing: source code is MIT-licensed; original profile copy and portfolio
+> artwork are CC BY 4.0. Third-party marks and assets retain their own rights.
+> See [`COPYRIGHT.md`](COPYRIGHT.md), [`LICENSE`](LICENSE), and
+> [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md) before reuse.
+
 <table>
 <tr>
 <td width="25%" align="center">◈<br><strong>TRUST</strong><br><sub>privacy · safety · evaluation</sub></td>
@@ -175,6 +180,14 @@ The public repositories are the visible edge of a larger portfolio of private pr
 
 Turning separate experiments into coherent public flagships with reproducible demos, explicit safety boundaries, and evidence-aware engineering.
 
+## Repository notes
+
+This repository is a profile and portfolio renderer, not a grant of rights to
+the linked projects, employers, institutions, trademarks, portraits, fonts, or
+external assets. The code license covers source code and scripts. Original
+written and visual portfolio material uses the separate content license. See
+[`docs/README.md`](docs/README.md) for the publication and asset boundary.
+
 <div align="center">
 
 <a href="https://manufaujdar.com"><strong>Build with me →</strong></a>
@@ -185,3 +198,6 @@ Turning separate experiments into coherent public flagships with reproducible de
   Design note: keep the profile visual and sparse. Project details belong in
   repositories; this page is the map, not the archive.
 -->
+> Copyright and reuse: this is a public profile repository, not an open-source
+> software release. See [`COPYRIGHT.md`](COPYRIGHT.md) before reusing content or
+> assets.
