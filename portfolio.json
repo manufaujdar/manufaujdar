@@ -1,0 +1,29 @@
+{
+  "domains": [
+    {
+      "label": "TRUSTWORTHY AI",
+      "caption": "privacy · routing · evaluation",
+      "signal": "three public systems + safety",
+      "color": "#68E8FF"
+    },
+    {
+      "label": "CLINICAL INTERFACES",
+      "caption": "devices · workflow · care",
+      "signal": "prototype + safety boundary",
+      "color": "#D29BFF"
+    },
+    {
+      "label": "TRANSLATIONAL RESEARCH",
+      "caption": "evidence · validation · biology",
+      "signal": "research systems in progress",
+      "color": "#B6F36B"
+    },
+    {
+      "label": "CREATIVE SYSTEMS",
+      "caption": "products · media · interfaces",
+      "signal": "three public tools + private core",
+      "color": "#FFB36A"
+    }
+  ],
+  "footer": "8 public projects · 3 private labs · research in motion"
+}
