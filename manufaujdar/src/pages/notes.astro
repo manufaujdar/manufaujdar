@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { feedbackEmail, links, notes } from '../data/site';
+---
+
+<Layout title="Notes | Manu Faujdar" description="Working notes from Manu Faujdar on clinical AI, evidence, privacy, patient experience, and reliable health-technology systems.">
+	<section class="section">
+		<div class="shell">
+			<div class="section-heading">
+				<p class="section-kicker">Notes</p>
+				<h1>Questions behind the work.</h1>
+				<p>Notes are where I turn a research question around before I decide what I think. I do not treat curiosity as expertise; I treat it as a reason to look closer. I share these working essays to make the reasoning visible enough to examine from another angle.</p>
+				<p class="section-note">Open a question to read the longer view. The response button is there for questions, disagreements, and additions.</p>
+			</div>
+			<div class="notes-list">
+				{notes.map((note, index) => <article class="note-card" data-note-card data-reveal>
+					<div class="note-card-top">
+						<div class="note-card-meta"><span>0{index + 1}</span><span>{note.label}</span></div>
+						<button class="note-share" type="button" data-feedback-toggle aria-expanded="false" aria-controls={`feedback-${note.slug}`}>
+							<span>Add a view</span><span aria-hidden="true">+</span>
+						</button>
+					</div>
+					<details class="note-details" id={`note-${note.slug}`}>
+						<summary class="note-summary">
+							<h2>{note.title}</h2>
+							<p>{note.copy}</p>
+							<span class="note-readmore">Read the note <span aria-hidden="true">+</span></span>
+						</summary>
+						<div class="note-expanded">
+							{note.view.map((paragraph) => <p>{paragraph}</p>)}
+							<p class="note-question">What would you add from your own work or experience?</p>
+							<form class="feedback-form" id={`feedback-${note.slug}`} data-feedback-form data-note-title={note.title} data-feedback-email={feedbackEmail} hidden>
+								<label class="feedback-field">
+									<span>Your name <span class="field-optional">optional</span></span>
+									<input type="text" name="name" autocomplete="name" placeholder="How should I address you?" />
+								</label>
+								<label class="feedback-field">
+									<span>Your email <span class="field-optional">optional</span></span>
+									<input type="email" name="email" autocomplete="email" placeholder="If you'd like a reply" />
+								</label>
+								<label class="feedback-field">
+									<span>What do you think?</span>
+									<textarea name="message" required minlength="3" rows="5" placeholder="A question, disagreement, example, or connection..."></textarea>
+								</label>
+								<p class="feedback-note">This opens your email app with a draft to Manu. Nothing is stored on this site.</p>
+								<div class="feedback-actions">
+									<button class="feedback-submit" type="submit">Open email draft <span aria-hidden="true">+</span></button>
+									<button class="feedback-cancel" type="button" data-feedback-cancel>Cancel</button>
+								</div>
+								<p class="feedback-status" data-feedback-status role="status" aria-live="polite"></p>
+							</form>
+						</div>
+					</details>
+				</article>)}
+			</div>
+		</div>
+	</section>
+
+	<section class="section alt">
+		<div class="shell split">
+			<div><p class="section-kicker">A specific question</p></div>
+			<div class="split-copy">
+				<p>If one of these questions overlaps with work you are already doing, the most useful message begins with the specific problem rather than a generic introduction.</p>
+				<div class="text-link-row"><a class="text-link" href={links.email}>Send a note</a><a class="text-link" href="/my-research">See selected work</a></div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script is:inline>
+	const feedbackToggles = document.querySelectorAll('[data-feedback-toggle]');
+
+	feedbackToggles.forEach((toggle) => {
+		const card = toggle.closest('[data-note-card]');
+		const details = card?.querySelector('.note-details');
+		const form = card?.querySelector('[data-feedback-form]');
+		const cancel = form?.querySelector('[data-feedback-cancel]');
+		const message = form?.querySelector('textarea[name="message"]');
+		const status = form?.querySelector('[data-feedback-status]');
+
+		const openForm = () => {
+			if (!(form instanceof HTMLFormElement)) return;
+			if (details instanceof HTMLDetailsElement) details.open = true;
+			form.hidden = false;
+			toggle.setAttribute('aria-expanded', 'true');
+			message?.focus();
+		};
+
+		toggle.addEventListener('click', openForm);
+		cancel?.addEventListener('click', () => {
+			form.hidden = true;
+			toggle.setAttribute('aria-expanded', 'false');
+			if (status) status.textContent = '';
+			toggle.focus();
+		});
+
+		form?.addEventListener('submit', (event) => {
+			event.preventDefault();
+			if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+			const noteTitle = form.dataset.noteTitle || 'a note';
+			const recipient = form.dataset.feedbackEmail || 'manu@healthunited.in';
+			const formData = new FormData(form);
+			const name = String(formData.get('name') || '').trim();
+			const email = String(formData.get('email') || '').trim();
+			const response = String(formData.get('message') || '').trim();
+			const body = [
+				`A response to: ${noteTitle}`,
+				'',
+				response,
+				'',
+				name ? `Name: ${name}` : '',
+				email ? `Reply email: ${email}` : '',
+				'',
+				'Sent from manufaujdar.com/notes',
+			].filter(Boolean).join('\n');
+			const subject = `A response to: ${noteTitle}`;
+			if (status) status.textContent = 'Opening your email app with a draft addressed to Manu.';
+			window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		});
+	});
+</script>

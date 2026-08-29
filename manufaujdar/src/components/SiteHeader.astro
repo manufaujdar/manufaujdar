@@ -1,0 +1,109 @@
+---
+import { links } from '../data/site';
+
+const pathname = Astro.url.pathname;
+const navLinks = [
+	{ href: '/', label: 'Home' },
+	{ href: '/my-research', label: 'Work' },
+	{ href: '/my-experience', label: 'About' },
+	{ href: '/notes', label: 'Notes' },
+	{ href: '/contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+	<div class="shell nav-wrap">
+		<a class="brand" href="/" aria-label="Manu Faujdar home, Morse code M logo"><span class="brand-morse" aria-hidden="true">--</span><span class="sr-only">M in Morse code</span></a>
+		<nav class="nav-links" aria-label="Primary navigation">
+			{navLinks.map((link) => <a href={link.href} aria-current={pathname === link.href ? 'page' : undefined}>{link.label}</a>)}
+		</nav>
+		<div class="header-tools">
+			<button class="command-trigger" type="button" data-command-open aria-haspopup="dialog" aria-expanded="false" aria-label="Open quick navigation">
+				<span class="command-trigger-shortcut" aria-hidden="true">Ctrl K</span>
+				<span class="command-trigger-label">Menu</span>
+			</button>
+			<a class="nav-external" href={links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in a new tab)">GitHub</a>
+			<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+				<span class="theme-toggle-icon" aria-hidden="true">
+					<svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 15.6A8.6 8.6 0 0 1 8.4 3.8 8.6 8.6 0 1 0 20.2 15.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+					<svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.6" /><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+				</span>
+				<span class="theme-toggle-label" data-theme-label>Dark</span>
+			</button>
+		</div>
+	</div>
+	<dialog class="command-palette" data-command-palette aria-labelledby="command-title">
+		<div class="command-card">
+			<div class="command-heading">
+				<div><p class="command-label">Quick navigation</p><h2 id="command-title">Where next?</h2></div>
+				<button class="command-close" type="button" data-command-close aria-label="Close quick navigation">Esc</button>
+			</div>
+			<nav class="command-links" aria-label="Quick navigation links">
+				{navLinks.map((link) => <a href={link.href} aria-current={pathname === link.href ? 'page' : undefined}>{link.label}<span aria-hidden="true">+</span></a>)}
+			</nav>
+		</div>
+	</dialog>
+</header>
+
+<script is:inline>
+	const root = document.documentElement;
+	const toggle = document.querySelector('[data-theme-toggle]');
+	const label = document.querySelector('[data-theme-label]');
+	let savedTheme = null;
+	try {
+		const storedTheme = window.localStorage.getItem('mf-theme');
+		if (storedTheme === 'light' || storedTheme === 'dark') savedTheme = storedTheme;
+	} catch {}
+	const systemTheme = window.matchMedia('(prefers-color-scheme: light)');
+	const commandPalette = document.querySelector('[data-command-palette]');
+	const commandOpeners = document.querySelectorAll('[data-command-open]');
+	const commandCloser = document.querySelector('[data-command-close]');
+	let commandOpener;
+
+	const setTheme = (theme) => {
+		root.dataset.theme = theme;
+		document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f5f5f1' : '#070707');
+		if (toggle) {
+			toggle.setAttribute('aria-pressed', String(theme === 'light'));
+			toggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+		}
+		if (label) label.textContent = theme === 'light' ? 'Light' : 'Dark';
+	};
+
+	setTheme(savedTheme ?? (systemTheme.matches ? 'light' : 'dark'));
+	systemTheme.addEventListener('change', (event) => {
+		if (savedTheme === null) setTheme(event.matches ? 'light' : 'dark');
+	});
+	toggle?.addEventListener('click', () => {
+		const nextTheme = root.dataset.theme === 'light' ? 'dark' : 'light';
+		savedTheme = nextTheme;
+		try { window.localStorage.setItem('mf-theme', nextTheme); } catch {}
+		setTheme(nextTheme);
+	});
+
+	const openCommandPalette = () => {
+		if (!(commandPalette instanceof HTMLDialogElement)) return;
+		commandOpener = document.activeElement;
+		commandOpeners.forEach((opener) => opener.setAttribute('aria-expanded', 'true'));
+		commandPalette.showModal();
+		commandPalette.querySelector('a')?.focus();
+	};
+
+	commandOpeners.forEach((opener) => opener.addEventListener('click', openCommandPalette));
+	const closeCommandPalette = () => {
+		if (!(commandPalette instanceof HTMLDialogElement)) return;
+		commandPalette.close();
+		commandOpeners.forEach((opener) => opener.setAttribute('aria-expanded', 'false'));
+		if (commandOpener instanceof HTMLElement) commandOpener.focus();
+	};
+	commandCloser?.addEventListener('click', closeCommandPalette);
+	commandPalette?.addEventListener('click', (event) => {
+		if (event.target === commandPalette) closeCommandPalette();
+	});
+	document.addEventListener('keydown', (event) => {
+		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+			event.preventDefault();
+			openCommandPalette();
+		}
+	});
+</script>

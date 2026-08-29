@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { links } from '../data/site';
+---
+
+<Layout title="Contact | Manu Faujdar" description="Contact Manu Faujdar about difficult questions, high-potential systems, and serious work across healthcare, research, and technology.">
+	<section class="section contact-hero">
+		<div class="shell contact-grid">
+			<div><p class="section-kicker">Contact</p></div>
+			<div data-reveal>
+				<p class="contact-spark">For work with real stakes.</p>
+				<h1>What are you trying to make possible?</h1>
+				<p class="contact-copy">The most worthwhile questions tend to sit at the edge of what is clear, where a better question can change the shape of the solution.</p>
+				<p class="contact-copy">I am interested in the point where a workflow, device, idea, study, or system no longer serves the people inside it—and where a more exact design might change that.</p>
+				<p class="contact-copy">I tend to form an initial direction quickly, but I take longer when the problem deserves a more considered answer. Often the interesting part is discovering what problem we are actually solving.</p>
+				<p class="section-note">A serious question, a clear proposal, or an unfinished thought is the right place to begin.</p>
+				<div class="contact-callout" data-reveal>
+					<strong>Worth solving, redesigning, or making useful?</strong>
+					<span>I pay attention to work with real stakes, clear intent, and room for meaningful change.</span>
+				</div>
+				<div class="contact-links" data-reveal>
+					<a class="contact-link" href={links.email}><span>Email Manu</span><span>Email</span></a>
+					<a class="contact-link" href={links.linkedin} target="_blank" rel="noopener noreferrer"><span>Professional profile</span><span>LinkedIn</span></a>
+					<a class="contact-link" href={links.github} target="_blank" rel="noopener noreferrer"><span>Projects and code</span><span>GitHub</span></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section mystery-section">
+		<div class="shell split">
+			<div><p class="section-kicker">A question in return</p></div>
+			<div>
+				<p class="mystery-intro">One question in return.</p>
+				<div class="mystery-box" data-mystery-box>
+					<button class="mystery-trigger" type="button" data-mystery-trigger aria-expanded="false" aria-controls="mystery-letter">
+						<span><strong>Mystery box</strong><small>Open if you are curious</small></span>
+						<span class="mystery-trigger-mark" aria-hidden="true">+</span>
+					</button>
+					<div class="mystery-reveal" id="mystery-letter" data-mystery-letter aria-hidden="true">
+						<div class="mystery-envelope" aria-hidden="true"></div>
+						<div class="mystery-letter" role="status" aria-live="polite">
+							<p class="mystery-letter-label">A letter from the unknown</p>
+							<p class="mystery-letter-question">What do you think is outside this universe?</p>
+							<p class="mystery-letter-signoff">No correct answer required.</p>
+							<a class="mystery-response-link" href={links.email}>Send your theory <span aria-hidden="true">+</span></a>
+						</div>
+					</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script is:inline>
+	const mysteryBox = document.querySelector('[data-mystery-box]');
+	const mysteryTrigger = mysteryBox?.querySelector('[data-mystery-trigger]');
+	const mysteryLetter = mysteryBox?.querySelector('[data-mystery-letter]');
+
+	mysteryTrigger?.addEventListener('click', () => {
+		if (!(mysteryTrigger instanceof HTMLButtonElement) || !(mysteryLetter instanceof HTMLElement)) return;
+		const isOpen = mysteryBox?.classList.toggle('is-open') ?? false;
+		mysteryTrigger.setAttribute('aria-expanded', String(isOpen));
+		mysteryLetter.setAttribute('aria-hidden', String(!isOpen));
+	});
+</script>

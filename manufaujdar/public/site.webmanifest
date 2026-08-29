@@ -1,0 +1,24 @@
+{
+	"name": "Manu Faujdar",
+	"short_name": "Manu Faujdar",
+	"description": "Clinical research, health technology, and reliable systems by Manu Faujdar.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#070707",
+	"theme_color": "#070707",
+	"icons": [
+		{
+			"src": "/pwa-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/pwa-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}

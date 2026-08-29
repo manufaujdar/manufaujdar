@@ -1,0 +1,20 @@
+---
+import { links } from '../data/site';
+---
+
+<footer class="site-footer">
+	<div class="shell footer-grid">
+		<div>
+			<p class="footer-label">Elsewhere</p>
+			<div class="footer-links">
+				<a href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				<a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+				<a href={links.email}>Email</a>
+			</div>
+		</div>
+		<div class="footer-meta">
+			<p>Manu Faujdar</p>
+			<p>Copyright {new Date().getFullYear()}</p>
+		</div>
+	</div>
+</footer>

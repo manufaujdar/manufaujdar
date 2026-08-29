@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title description">
+	<title id="title">Manu Faujdar logo</title>
+	<desc id="description">Two white horizontal dashes representing the letter M in Morse code on a dark square.</desc>
+	<rect width="128" height="128" rx="24" fill="#070707" />
+	<rect x="12" y="44" width="44" height="40" rx="8" fill="#f4f3ee" />
+	<rect x="72" y="44" width="44" height="40" rx="8" fill="#f4f3ee" />
+</svg>
