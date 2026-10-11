@@ -23,12 +23,12 @@ const navLinks = [
 				<span class="command-trigger-label">Menu</span>
 			</button>
 			<a class="nav-external" href={links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in a new tab)">GitHub</a>
-			<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+			<button class="theme-toggle" type="button" data-theme-toggle aria-label="Theme: System. Switch to light theme">
 				<span class="theme-toggle-icon" aria-hidden="true">
 					<svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 15.6A8.6 8.6 0 0 1 8.4 3.8 8.6 8.6 0 1 0 20.2 15.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 					<svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.6" /><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
 				</span>
-				<span class="theme-toggle-label" data-theme-label>Dark</span>
+				<span class="theme-toggle-label" data-theme-label>System</span>
 			</button>
 		</div>
 	</div>
@@ -41,6 +41,13 @@ const navLinks = [
 			<nav class="command-links" aria-label="Quick navigation links">
 				{navLinks.map((link) => <a href={link.href} aria-current={pathname === link.href ? 'page' : undefined}>{link.label}<span aria-hidden="true">+</span></a>)}
 			</nav>
+			<fieldset class="display-preferences">
+				<legend>Appearance</legend>
+				<label>Theme <select data-theme-preference><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+				<label>Scrolling <select data-scroll-preference><option value="native">Native</option><option value="smooth">Smooth</option></select></label>
+				<p>Smooth scrolling applies to Home and Work with a desktop pointer. Touch and reduced motion use native scrolling.</p>
+				<p data-preference-status role="status">Preferences stay in this browser.</p>
+			</fieldset>
 		</div>
 	</dialog>
 </header>
@@ -49,6 +56,9 @@ const navLinks = [
 	const root = document.documentElement;
 	const toggle = document.querySelector('[data-theme-toggle]');
 	const label = document.querySelector('[data-theme-label]');
+	const themePreference = document.querySelector('[data-theme-preference]');
+	const scrollPreference = document.querySelector('select[data-scroll-preference]');
+	const preferenceStatus = document.querySelector('[data-preference-status]');
 	let savedTheme = null;
 	try {
 		const storedTheme = window.localStorage.getItem('mf-theme');
@@ -64,25 +74,42 @@ const navLinks = [
 		root.dataset.theme = theme;
 		document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f5f5f1' : '#070707');
 		if (toggle) {
-			toggle.setAttribute('aria-pressed', String(theme === 'light'));
-			toggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+			const mode = savedTheme ?? 'system';
+			const next = mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system';
+			toggle.setAttribute('aria-label', `Theme: ${mode}. Switch to ${next} theme`);
 		}
-		if (label) label.textContent = theme === 'light' ? 'Light' : 'Dark';
+		if (label) label.textContent = savedTheme ?? 'System';
+		if (themePreference) themePreference.value = savedTheme ?? 'system';
 	};
 
 	setTheme(savedTheme ?? (systemTheme.matches ? 'light' : 'dark'));
 	systemTheme.addEventListener('change', (event) => {
 		if (savedTheme === null) setTheme(event.matches ? 'light' : 'dark');
 	});
-	toggle?.addEventListener('click', () => {
-		const nextTheme = root.dataset.theme === 'light' ? 'dark' : 'light';
-		savedTheme = nextTheme;
-		try { window.localStorage.setItem('mf-theme', nextTheme); } catch {}
-		setTheme(nextTheme);
+	const savePreference = (key, value) => {
+		try {
+			window.localStorage.setItem(key, value);
+			if (preferenceStatus) preferenceStatus.textContent = 'Preferences saved in this browser.';
+		} catch {
+			if (preferenceStatus) preferenceStatus.textContent = 'Preferences apply to this page only; browser storage is unavailable.';
+		}
+	};
+	const chooseTheme = (mode) => {
+		savedTheme = mode === 'light' || mode === 'dark' ? mode : null;
+		setTheme(savedTheme ?? (systemTheme.matches ? 'light' : 'dark'));
+		savePreference('mf-theme', savedTheme ?? 'system');
+	};
+	themePreference?.addEventListener('change', () => chooseTheme(themePreference.value));
+	toggle?.addEventListener('click', () => chooseTheme(savedTheme === null ? 'light' : savedTheme === 'light' ? 'dark' : 'system'));
+	try { if (scrollPreference) scrollPreference.value = window.localStorage.getItem('mf-scroll') === 'smooth' ? 'smooth' : 'native'; } catch {}
+	scrollPreference?.addEventListener('change', () => {
+		document.documentElement.dataset.scrollPreference = scrollPreference.value;
+		savePreference('mf-scroll', scrollPreference.value);
+		window.dispatchEvent(new Event('mf-scroll-preference'));
 	});
 
 	const openCommandPalette = () => {
-		if (!(commandPalette instanceof HTMLDialogElement)) return;
+		if (!(commandPalette instanceof HTMLDialogElement) || commandPalette.open) return;
 		commandOpener = document.activeElement;
 		commandOpeners.forEach((opener) => opener.setAttribute('aria-expanded', 'true'));
 		commandPalette.showModal();
@@ -93,15 +120,17 @@ const navLinks = [
 	const closeCommandPalette = () => {
 		if (!(commandPalette instanceof HTMLDialogElement)) return;
 		commandPalette.close();
+	};
+	commandPalette?.addEventListener('close', () => {
 		commandOpeners.forEach((opener) => opener.setAttribute('aria-expanded', 'false'));
 		if (commandOpener instanceof HTMLElement) commandOpener.focus();
-	};
+	});
 	commandCloser?.addEventListener('click', closeCommandPalette);
 	commandPalette?.addEventListener('click', (event) => {
 		if (event.target === commandPalette) closeCommandPalette();
 	});
 	document.addEventListener('keydown', (event) => {
-		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+		if (!event.isComposing && (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
 			event.preventDefault();
 			openCommandPalette();
 		}
