@@ -1,0 +1,5 @@
+
+# Isolated engineering tooling
+/tools/docs-tools/node_modules/
+/tools/browser/node_modules/
+**/__pycache__/

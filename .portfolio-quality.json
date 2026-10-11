@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "pre_push": [
+    "python3",
+    "tools/native_pre_push.py"
+  ],
+  "commit": "pre-commit staged redacted secrets",
+  "publication": "main only; no automatic merge/deploy",
+  "conflicts": "Git rerere, autoupdate=false; manual conflict review",
+  "review": "CodeRabbit manual scope only; account unconfigured"
+}

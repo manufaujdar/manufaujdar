@@ -1,0 +1,7 @@
+{
+  "name": "website-browser-regressions",
+  "private": true,
+  "type": "module",
+  "scripts": {"test": "node regression.mjs"},
+  "devDependencies": {"playwright": "1.64.0", "@axe-core/playwright": "4.13.0", "esbuild": "0.28.2", "lenis": "1.3.26"}
+}
