@@ -60,13 +60,14 @@ const socialImage = new URL('/pwa-512.png', 'https://www.manufaujdar.com').toStr
 		</script>
 		<title>{title}</title>
 	</head>
-	<body>
+	<body data-smooth-scroll={Astro.url.pathname === "/" || Astro.url.pathname === "/my-research" ? "eligible" : undefined}>
 		<a class="skip-link" href="#main-content">Skip to content</a>
 		<SiteHeader />
 		<main id="main-content">
 			<slot />
 		</main>
 		<SiteFooter />
+		<script>import '../scripts/scroll';</script>
 		<script is:inline>
 			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const revealItems = document.querySelectorAll('[data-reveal]');
